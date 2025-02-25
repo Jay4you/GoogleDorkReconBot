@@ -4,8 +4,11 @@ Overview
 
 Google Dorking Recon Bot automates reconnaissance using Google Dorks to find:
 ✅ Exposed directories and sensitive files
+
 ✅ Admin panels and login pages
+
 ✅ WordPress configuration files
+
 ✅ Subdomains using Google search queries
 
 This tool helps penetration testers and bug bounty hunters quickly discover security risks.
@@ -75,9 +78,13 @@ No results found.
 To-Do List
 
 ✅ Initial bot implementation
+
 ⬜ Save results to a file (results.txt or JSON)
+
 ⬜ Add proxy support to prevent Google blocks
+
 ⬜ Integrate with Nmap/Nuclei for deeper scanning
+
 ⬜ Dockerize for easy deployment
 
 ---
