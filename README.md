@@ -1,6 +1,6 @@
 # Google Dorking Recon Bot
 
-Overview
+- Overview
 
 Google Dorking Recon Bot automates reconnaissance using Google Dorks to find:
 ✅ Exposed directories and sensitive files
@@ -15,7 +15,7 @@ This tool helps penetration testers and bug bounty hunters quickly discover secu
 
 ---
 
-Features
+- Features
 
 Automated Google Dorking – Finds sensitive files, admin pages, and subdomains
 
@@ -27,34 +27,54 @@ Customizable Dork Queries – Expand the bot with new search queries
 
 ---
 
-Installation
+- Installation
 
 1. Clone the Repository
 
-git clone https://github.com/Jay4you/GoogleDorkReconBot.git
-cd GoogleDorkReconBot
+   		git clone https://github.com/Jay4you/GoogleDorkReconBot.git
 
-2. Install Dependencies
+  		cd GoogleDorkReconBot
 
-pip install -r requirements.txt
+3. Create a virtual enviroment and Install Dependencies:
+python3 -m venv myenv
+   
+    	source myenv/bin/activate  # On Linux/macOS
+     
+    	myenv\Scripts\activate     # On Windows
+   
+    	pip install -r requirements.txt
 
-3. Download ChromeDriver
+5. Check Your Google Chrome Version:
+   
+        google-chrome --version # On Linux/macOS
+        chrome --version # On Windows
+        # You'll see something like: Google Chrome 120.0.6099.110
 
-1. Check your Google Chrome version
+   	If not available, download :
+		On Kali Linux / Debian-based Systems
 
+		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+		sudo apt install ./google-chrome-stable_current_amd64.deb
 
-2. Download the matching ChromeDriver from here
+7. Download the matching ChromeDriver and version for your operating system from [here](https://chromedriver.chromium.org/downloads/)
 
+8. Extract & Place in Project Folder
 
-3. Place it in the project folder
+    Windows:
+      Extract the chromedriver.exe and move it to the GoogleDorkReconBot folder.
+   
+    Linux/macOS:
+   
+      	mv chromedriver GoogleDorkReconBot/
+      	chmod +x GoogleDorkReconBot/chromedriver  # Make it executable
 
 ---
 
-Usage
+- Usage
 
 Run the bot and enter a target domain:
 
-python dork_recon.py
+	python dork_recon.py
 
 Example input:
 
@@ -62,20 +82,20 @@ Enter the target domain (e.g., example.com): netflix.com
 
 Example output:
 
-### Admin Panels ###
-1. Netflix Admin Login - https://netflix.com/admin
-2. Secure Dashboard - https://secure.netflix.com/admin
-
-### WordPress Config ###
-No results found.
-
-### Subdomains ###
-1. support.netflix.com
-2. api.netflix.com
+	Admin Panels
+	1. Netflix Admin Login - https://netflix.com/admin
+	2. Secure Dashboard - https://secure.netflix.com/admin
+	
+	WordPress Config
+	No results found.
+	
+	Subdomains
+	1. support.netflix.com
+	2. api.netflix.com
 
 ---
 
-To-Do List
+- To-Do List
 
 ✅ Initial bot implementation
 
