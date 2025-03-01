@@ -1,6 +1,5 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+import requests
+from bs4 import BeautifulSoup
 import time
 
 # Define extended Google Dorking queries
@@ -16,10 +15,9 @@ DORKS = {
     "Login Pages": "site:{} inurl:login | inurl:signin"
 }
 
-# Set up WebDriver (headless mode for stealth)
-options = webdriver.ChromeOptions()
-options.add_argument("--headless")  # Run in the background
-driver = webdriver.Chrome(options=options)
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+}
 
 # Get user input
 target_domain = input("Enter the target domain (e.g., example.com): ")
@@ -30,28 +28,25 @@ print("\nSearching for sensitive files, admin directories, and subdomains...\n")
 for category, dork_query in DORKS.items():
     query = dork_query.format(target_domain, target_domain)
     
-    # Open Google
-    driver.get("https://www.google.com")
+    # Use Bing search (replace "Bing" with "Google" if you bypass CAPTCHA)
+    url = f"https://www.bing.com/search?q={query}"
+    
+    response = requests.get(url, headers=HEADERS)
+    time.sleep(2)  # Avoid rate-limiting
 
-    # Enter search query
-    search_box = driver.find_element(By.NAME, "q")
-    search_box.send_keys(query)
-    search_box.send_keys(Keys.RETURN)
-
-    # Wait for results
-    time.sleep(3)
-
-    # Extract and print top 5 search result links
-    results = driver.find_elements(By.CSS_SELECTOR, "h3")
-    links = driver.find_elements(By.CSS_SELECTOR, "div.yuRUbf a")
-
-    print(f"### {category} ###")
-    if results:
-        for i in range(min(5, len(results))):
-            print(f"{i+1}. {results[i].text} - {links[i].get_attribute('href')}")
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, "html.parser")
+        results = soup.select("li.b_algo h2 a")  # Extract search results
+        
+        print(f"### {category} ###")
+        if results:
+            for i, link in enumerate(results[:5]):  # Show top 5 results
+                print(f"{i+1}. {link.text} - {link['href']}")
+        else:
+            print("No results found.")
     else:
-        print("No results found.")
+        print(f"Failed to fetch results for {category}")
+
     print("\n" + "-"*50 + "\n")
 
-# Close browser
-driver.quit()
+print("Scanning complete.")
